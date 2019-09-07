@@ -1,0 +1,57 @@
+---
+title: "HuffTest"
+author: "Peyton Taylor"
+date: "6/27/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Model 1 (dAway) 
+
+```{r, echo = TRUE}
+
+data<- read.csv("/Users/ptayla/Desktop/UCM GAMES/CleanGames.csv")
+
+data$code <- paste0(as.character(data$Jolene.Shipps), as.character(data$Kelsey.Williams), as.character(data$Sydney.Skaggs), as.character(data$Sydney.Crockett), as.character(data$Morgan.Fleming), as.character(data$Kayonna.Lee), as.character(data$Megan.Skaggs), as.character(data$Kendra.Gladbach), as.character(data$Paige.Redmond), as.character(data$Gigi.Mcatee), as.character(data$Peyton.Taylor), as.character(data$Emilie.Jobst), as.character(data$Abby.Gann))
+
+teamFun <- function(x){
+  x2 <- as.character(x[1])
+  if (is.na(x2) == TRUE) return(NA)
+  if (x2 == "0100111010000") {return("00000000000000000starters")}
+  else {return (x2)}
+}
+
+data$code2 <- apply(data[,c("code","Home")], MARGIN = 1, FUN = function(x) teamFun(x))
+
+
+model.1 <- lm(dAway ~ code2, data = data)
+
+summary(model.1)
+
+```
+
+# Model 2 (dHome)
+```{r, echo = TRUE}
+
+model.2 <- lm(dHome ~ code2, data = data)
+summary(model.2)
+```
+
+
+# Model 3 (Margin)
+```{r, echo = TRUE}
+
+data$dMargin <- (data$dHome - data$dAway)
+
+model.3 <- lm(dMargin ~ code2, data = data)
+summary(model.3)
+```
+
+
+```{r, echo = TRUE}
+hist(data$dHome - data$dAway)
+```
+

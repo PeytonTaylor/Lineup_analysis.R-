@@ -1,0 +1,41 @@
+---
+title: "Individual Contribution"
+author: "Peyton Taylor"
+date: "7/5/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Individual Defense
+
+##### Data only contains rows that represent change in defensive scores for UCM 
+```{r, echo = TRUE}
+IndvDef<-read.csv("/Users/ptayla/Desktop/UCM GAMES/IndvDef.csv", 
+                        header = TRUE, stringsAsFactors = FALSE)
+
+
+IndvDefense<-glm(dAway~Jolene.Shipps + Kelsey.Williams + Sydney.Skaggs + Sydney.Crockett + Paige.Redmond+
+                Morgan.Fleming + Kayonna.Lee + Megan.Skaggs + Kendra.Gladbach + Gigi.Mcatee + Emilie.Jobst + Peyton.Taylor + Abby.Gann, data = IndvDef)
+
+summary(IndvDefense)
+```
+
+### Individual Offense
+
+##### Data only contains rows that represent change in offensive scores for UCM 
+```{r, echo= FALSE}
+IndvOff<-read.csv("/Users/ptayla/Desktop/UCM GAMES/IndvOff.csv", 
+                  header = TRUE, stringsAsFactors = FALSE)
+
+IndvOffense<-glm(dHome~Jolene.Shipps + Kelsey.Williams + Sydney.Skaggs + Sydney.Crockett + 
+                 Morgan.Fleming + Kayonna.Lee + Megan.Skaggs + Kendra.Gladbach + Paige.Redmond +
+              Gigi.Mcatee + Emilie.Jobst + Peyton.Taylor + Abby.Gann, data = IndvOff)
+
+summary(IndvOffense)
+
+```
+
+

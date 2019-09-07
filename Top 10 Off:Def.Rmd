@@ -1,0 +1,44 @@
+---
+title: "Top 10 Off/Def"
+author: "Peyton Taylor"
+date: "7/5/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, echo=FALSE}
+
+TeamData<- read.csv("/Users/ptayla/Desktop/UCM GAMES/TeamData.csv")
+
+TeamData$code <- paste0(as.character(TeamData$Jolene.Shipps), as.character(TeamData$Kelsey.Williams), as.character(TeamData$Sydney.Skaggs), as.character(TeamData$Sydney.Crockett), as.character(TeamData$Morgan.Fleming), as.character(TeamData$Kayonna.Lee), as.character(TeamData$Megan.Skaggs), as.character(TeamData$Kendra.Gladbach), as.character(TeamData$Paige.Redmond), as.character(TeamData$Gigi.Mcatee), as.character(TeamData$Peyton.Taylor), as.character(TeamData$Emilie.Jobst), as.character(TeamData$Abby.Gann))
+
+teamFun <- function(x){
+  x2 <- as.character(x[1])
+  if (is.na(x2) == TRUE) return(NA)
+  if (x2 == "0100111010000") {return("00000000000000000starters")}
+  else {return (x2)}
+}
+
+TeamData$code2 <- apply(TeamData[,c("code","Home")], MARGIN = 1, FUN = function(x) teamFun(x))
+
+```
+
+### Defensive Model
+##### Top 10
+
+``` {r, echo = TRUE}
+model.2 <- lm(dAway ~ code2 + Home, data = TeamData)
+summary(model.2)
+```
+### Offensive Model
+##### Top 10
+
+``` {r, echo = TRUE}
+model.3 <- lm(dHome ~ code2 + Home, data = TeamData)
+summary(model.3)
+```
+
